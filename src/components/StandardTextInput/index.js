@@ -1,5 +1,6 @@
 import React from "react";
 import { TextInput } from "@rneui/themed";
+import { StyleSheet } from "react-native";
 
 export const StandardTextInput = (placeholder, value, onchange) => {
   return (
