@@ -9,9 +9,9 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
         <Text>Open up App.js to p!</Text>
-        <StandardButton color={"primary"} title={"Big"} />
+        {/* <StandardButton color={"primary"} title={"Big"} />
         <StandardButton color={"secondary"} title={"Small"} />
-        <StandardButton color={"#A7E821"} title={"Small"} size={"lg"} />
+        <StandardButton color={"#A7E821"} title={"Small"} size={"lg"} /> */}
         <View style={styles.buttonContainer}>
           <StandardButton color={"#A7E821"} title={"My button"} size={"lg"} />
         </View>
