@@ -1,6 +1,7 @@
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { ThemeProvider, Button } from "@rneui/themed";
+import { ThemeProvider } from "@rneui/themed";
 import theme from "./src/Theme";
 import StandardButton from "./src/components/StandardButton";
 import StandardTextInput from "./src/components/StandardTextInput";
@@ -12,7 +13,13 @@ export default function App() {
         <Text>Open up App.js to p!</Text>
         <View style={styles.buttonContainer}>
           <StandardButton color={"#A7E821"} title={"My button"} size={"lg"} />
-          <StandardTextInput placeholder={"name"} />
+          <View style={styles.inputContainer}>
+            <StandardTextInput
+              onChange={null}
+              placeholder={"Enter value"}
+              value={null}
+            />
+          </View>
         </View>
 
         <StatusBar style="auto" />
@@ -31,5 +38,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: "80%",
     height: "auto",
+  },
+  inputContainer: {
+    marginVertical: 12,
+    borderRadius: "50px",
   },
 });
