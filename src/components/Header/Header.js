@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Icon } from "@rneui/themed";
 import Logo from "../Logo/Logo";
-import StandardButton from "../StandardButton";
+import StandardButton from "../StandardButton/StandardButton";
 
 const Header = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import StandardButton from "../../components/StandardButton";
+import StandardButton from "../../components/StandardButton/StandardButton";
 import screen from "../../utils/screen";
 
 const KidDetails = ({ route, navigation }) => {
@@ -56,7 +56,7 @@ const KidDetails = ({ route, navigation }) => {
               titleStyle={{ color: "#FFFFFF" }}
               onPress={() => navigation.navigate("Donation Form", { kid: kid })}
               icon={null}
-              color={"primary"}
+              color={"mainGreen"}
               containerStyle={{ width: "35%" }}
             />
           </View>

@@ -7,6 +7,7 @@ const theme = createTheme({
   darkColors: {
     mainGray: "#8C8C8C",
     mainBlack: "#000000",
+    darkGray: "#121110",
   },
   components: {
     Button: {
