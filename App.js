@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { ThemeProvider } from "@rneui/themed";
 import theme from "./src/Theme";
 import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+import SignupScreen from "./src/screens/SignupScreen/SignupScreen";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <View style={styles.container}>
         <Text>Open up App.js to p!</Text>
         <LoginScreen />
+        <SignupScreen />
 
         {/* <View style={styles.buttonContainer}>
           <StandardButton color={"#A7E821"} title={"My button"} size={"lg"} />
