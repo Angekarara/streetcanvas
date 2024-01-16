@@ -3,15 +3,16 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { ThemeProvider } from "@rneui/themed";
 import theme from "./src/Theme";
-import StandardButton from "./src/components/StandardButton";
-import StandardTextInput from "./src/components/StandardTextInput";
+import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
         <Text>Open up App.js to p!</Text>
-        <View style={styles.buttonContainer}>
+        <LoginScreen />
+
+        {/* <View style={styles.buttonContainer}>
           <StandardButton color={"#A7E821"} title={"My button"} size={"lg"} />
           <View style={styles.inputContainer}>
             <StandardTextInput
@@ -20,7 +21,7 @@ export default function App() {
               value={null}
             />
           </View>
-        </View>
+        </View> */}
 
         <StatusBar style="auto" />
       </View>

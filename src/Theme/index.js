@@ -2,15 +2,22 @@ import { createTheme } from "@rneui/themed";
 
 const theme = createTheme({
   lightColors: {
-    primary: "red",
+    mainGreen: "#A7E821",
   },
   darkColors: {
-    primary: "blue",
+    mainGray: "#8C8C8C",
+    mainBlack: "#000000",
   },
   components: {
     Button: {
-      raised: true,
-      radius: 12,
+      width: "100%",
+      margin: 50,
+      borderRadius: 10,
+      alignItems: "center",
+      backgroundColor: "#A7E821",
+    },
+    Input: {
+      width: 21,
     },
   },
 });
