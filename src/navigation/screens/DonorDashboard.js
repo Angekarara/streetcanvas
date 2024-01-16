@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import StandardButton from "../../components/StandardButton";
 import ListCard from "../../components/ListCard/ListCard";
 
 const data = [
@@ -51,9 +50,9 @@ const kidsData = [
   },
 ];
 
-const AdminDashboard = ({ navigation }) => {
+const DonorDashboard = ({ navigation }) => {
   const handleDetailsScreen = (kid) => {
-    navigation.navigate("Kid Details", { kid: kid, role: "Admin" });
+    navigation.navigate("Kid Details", { kid: kid, role: "Donor" });
   };
   return (
     <View style={styles.container}>
@@ -61,11 +60,11 @@ const AdminDashboard = ({ navigation }) => {
         <View style={styles.section}>
           <View style={styles.metric}>
             <View style={styles.metricNumber}>
-              <Text style={styles.metricNumberText}>45</Text>
+              <Text style={styles.metricNumberText}>1200</Text>
             </View>
             <View>
               <Text style={styles.metricNumberText}>Kids</Text>
-              <Text style={styles.text}>In your location</Text>
+              <Text style={styles.text}>Available</Text>
             </View>
           </View>
           <View style={styles.metric}>
@@ -73,23 +72,10 @@ const AdminDashboard = ({ navigation }) => {
               <Text style={styles.metricNumberText}>34</Text>
             </View>
             <View>
-              <Text style={styles.metricNumberText}>Donation</Text>
+              <Text style={styles.metricNumberText}>Kids</Text>
               <Text style={styles.text}>In your location</Text>
             </View>
           </View>
-        </View>
-
-        <View style={styles.section}>
-          <StandardButton
-            title="Register New Kid"
-            size="lg"
-            type="solid"
-            titleStyle={{ color: "#FFFFFF" }}
-            onPress={() => console.log("Register Kid...")}
-            icon={null}
-            color={"primary"}
-            containerStyle={{ width: "100%" }}
-          />
         </View>
 
         {data.map((item) => (
@@ -175,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminDashboard;
+export default DonorDashboard;

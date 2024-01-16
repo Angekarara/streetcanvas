@@ -1,9 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 
-const ListCard = ({ title, description }) => {
+const ListCard = ({ kid, onPress }) => {
   return (
-    <TouchableOpacity style={styles.section} onPress={() => console.log(title)}>
+    <TouchableOpacity
+      style={styles.section}
+      onPress={onPress}
+    >
       <View style={styles.avatarContainer}>
         <Image
           source={require("../../../assets/kid.jpg")}
@@ -12,8 +15,8 @@ const ListCard = ({ title, description }) => {
       </View>
 
       <View style={styles.descriptionContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{description}</Text>
+        <Text style={styles.title}>{`${kid.name}, ${kid.age} y`}</Text>
+        <Text style={styles.text}>{kid.description}</Text>
       </View>
     </TouchableOpacity>
   );
