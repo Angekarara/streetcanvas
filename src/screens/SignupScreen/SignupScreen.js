@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "80%",
     marginBottom: 10,
-    padding: 5,
+    padding: 6,
   },
 });
 
