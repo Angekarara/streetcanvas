@@ -4,44 +4,54 @@ import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../Theme/index";
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignup = () => {
     console.log("Login button pressed");
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Signup</Text>
 
       <View style={styles.inputContainer}>
         <StandardTextInput
-          onChange={null}
+          onChange={(text) => setUsername(text)}
           placeholder="Username"
           value={username}
         />
         <StandardTextInput
-          onChange={null}
+          onChange={(text) => setPassword(text)}
           placeholder="Password"
           value={password}
+          secureTextEntry
+        />
+        <StandardTextInput
+          onChange={(text) => setConfirmPassword(text)}
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          secureTextEntry
         />
       </View>
 
       <StandardButton
         color={theme.lightColors.mainGreen}
-        title="Login"
+        title="Signup"
         size="lg"
-        onPress={handleLogin}
+        onPress={handleSignup}
       />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
     flex: 1,
-    width: "60%",
-    marginVertical: 50,
+    width: "50%",
+    marginVertical: 100,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -51,10 +61,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputContainer: {
-    width: "100%",
+    width: "80%",
     marginBottom: 10,
-    padding: 5,
+    padding: 6,
   },
 });
 
-export default LoginScreen;
+export default SignupScreen;
