@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import screen from "../../utils/screen";
+import theme from "../../theme";
 
 const KidDetails = ({ route, navigation }) => {
   const { kid, role } = route.params;
@@ -31,10 +32,10 @@ const KidDetails = ({ route, navigation }) => {
               title="Remove"
               size="lg"
               type="solid"
-              titleStyle={{ color: "#FFFFFF" }}
+              titleStyle={{ color: theme.lightColors.mainTextColor }}
               onPress={() => console.log("Remove Kid...")}
               icon={null}
-              color={"primary"}
+              color={theme.lightColors.mainGreen}
               containerStyle={{ width: "50%" }}
             />
           </View>
@@ -44,16 +45,19 @@ const KidDetails = ({ route, navigation }) => {
               title="Adopt"
               size="lg"
               type="outline"
-              titleStyle={{ color: "#A7E821" }}
+              titleStyle={{ color: theme.lightColors.mainGreen }}
               onPress={() => console.log("Adopt Kid...")}
               icon={null}
-              containerStyle={{ width: "35%" }}
+              containerStyle={{
+                width: "35%",
+                borderColor: theme.lightColors.mainGreen,
+              }}
             />
             <StandardButton
               title="Donate"
               size="lg"
               type="solid"
-              titleStyle={{ color: "#FFFFFF" }}
+              titleStyle={{ color: theme.lightColors.mainTextColor }}
               onPress={() => navigation.navigate("Donation Form", { kid: kid })}
               icon={null}
               color={"mainGreen"}
@@ -69,7 +73,7 @@ const KidDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: theme.darkColors.mainBlack,
   },
   container: {
     flex: 1,
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   text: {
-    color: "#fff",
+    color: theme.lightColors.mainTextColor,
     textAlign: "center",
   },
   title: {

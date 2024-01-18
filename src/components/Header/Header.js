@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { Icon } from "@rneui/themed";
+import { AuthContext } from "../../context/AuthProvider";
 import Logo from "../Logo/Logo";
 import StandardButton from "../StandardButton/StandardButton";
 
 const Header = () => {
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <View style={styles.content}>
       <View style={{ width: 100 }}>
@@ -16,7 +23,7 @@ const Header = () => {
           size="md"
           type="clear"
           titleStyle={{ color: "#A7E821" }}
-          onPress={() => console.log("Logout...")}
+          onPress={handleLogout}
           icon={<Icon name="arrow-left" color={"#A7E821"} size={24} />}
         />
       </View>

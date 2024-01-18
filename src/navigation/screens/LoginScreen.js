@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { AuthContext } from "../../context/AuthProvider";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../theme/index";
 
 const LoginScreen = ({ navigation }) => {
+  const { auth, login } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (username === "Admin") navigation.navigate("Admin Dashboard");
-    navigation.navigate("Donor Dashboard");
+  /**
+   * Simple login logic that checks the username only
+   */
+  const handleLogin = async () => {
+    await login({ username, password });
+
+    if (auth && auth.username === "Admin") {
+      navigation.navigate("Admin Dashboard");
+    } else if (auth && auth.username === "Donor") {
+      navigation.navigate("Donor Dashboard");
+    }
   };
 
   return (
@@ -51,7 +61,6 @@ const LoginScreen = ({ navigation }) => {
             }}
             onPress={() => navigation.navigate("Signup")}
             icon={null}
-            containerStyle={{ width: "35%" }}
           />
         </View>
 
@@ -61,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
           size="lg"
           onPress={handleLogin}
           type="solid"
-          titleStyle={{ color: "#000000" }}
+          titleStyle={{ color: theme.darkColors.mainBlack }}
           icon={null}
           containerStyle={{ width: "60%" }}
         />
@@ -71,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: theme.darkColors.mainBlack,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#FFFFFF",
+    color: theme.lightColors.mainTextColor,
   },
   inputContainer: {
     width: "100%",
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   caption: {
-    borderWidth: 1,
+    marginBottom: 24,
   },
 });
 
