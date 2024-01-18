@@ -40,6 +40,21 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
 
+        <View style={styles.caption}>
+          <StandardButton
+            title="Create New Account"
+            size="sm"
+            type="clear"
+            titleStyle={{
+              color: theme.lightColors.mainTextColor,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => navigation.navigate("Signup")}
+            icon={null}
+            containerStyle={{ width: "35%" }}
+          />
+        </View>
+
         <StandardButton
           color={theme.lightColors.mainGreen}
           title="Login"
@@ -84,6 +99,9 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 50,
     paddingVertical: 24,
+  },
+  caption: {
+    borderWidth: 1,
   },
 });
 
