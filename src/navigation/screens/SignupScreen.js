@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
-import theme from "../../Theme/index";
+import theme from "../../theme/index";
 
 const SignupScreen = () => {
   const [username, setUsername] = useState("");

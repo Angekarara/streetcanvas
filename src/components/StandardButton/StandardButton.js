@@ -2,9 +2,15 @@ import React from "react";
 import { Button } from "@rneui/themed";
 import { StyleSheet, Text, View } from "react-native";
 
-const StandardButton = ({ title, color, size }) => {
+const StandardButton = ({ title, color, size, ...props }) => {
   return (
-    <Button title={title} color={color} size={size} style={styles.button} />
+    <Button
+      title={title}
+      color={color}
+      size={size}
+      style={styles.button}
+      {...props}
+    />
   );
 };
 const styles = StyleSheet.create({
