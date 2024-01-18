@@ -70,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
           size="lg"
           onPress={handleLogin}
           type="solid"
-          titleStyle={{ color: "#000000" }}
+          titleStyle={{ color: theme.darkColors.mainBlack }}
           icon={null}
           containerStyle={{ width: "60%" }}
         />
@@ -80,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: theme.darkColors.mainBlack,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#FFFFFF",
+    color: theme.lightColors.mainTextColor,
   },
   inputContainer: {
     width: "100%",
