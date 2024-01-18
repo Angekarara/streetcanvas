@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../theme/index";
@@ -10,10 +10,16 @@ const SignupScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSignup = () => {
-    console.log("Login button pressed");
+    console.log("signup button pressed");
   };
   return (
     <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../../../assets/logo.png")}
+          style={{ width: 100 }}
+        />
+      </View>
       <Text style={styles.title}>Signup</Text>
 
       <View style={styles.inputContainer}>
@@ -41,6 +47,10 @@ const SignupScreen = () => {
         title="Signup"
         size="lg"
         onPress={handleSignup}
+        type="solid"
+        titleStyle={{ color: "#000000" }}
+        icon={null}
+        containerStyle={{ width: "60%" }}
       />
     </View>
   );
@@ -50,21 +60,35 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
     flex: 1,
-    width: "50%",
-    marginVertical: 100,
     alignItems: "center",
     justifyContent: "center",
+  },
+  logoContainer: {
+    marginBottom: 44,
+  },
+  content: {
+    backgroundColor: theme.darkColors.darkGray,
+    flex: 1,
+    width: "80%",
+    maxHeight: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderTopLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#FFFFFF",
   },
   inputContainer: {
-    width: "80%",
-    marginBottom: 10,
-    padding: 6,
+    width: "100%",
+    paddingHorizontal: 50,
+    paddingVertical: 24,
+  },
+  caption: {
+    borderWidth: 1,
   },
 });
-
 export default SignupScreen;
