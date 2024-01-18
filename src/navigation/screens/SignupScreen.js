@@ -4,7 +4,7 @@ import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../theme/index";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,6 +18,7 @@ const SignupScreen = () => {
         <Image
           source={require("../../../assets/logo.png")}
           style={{ width: 100 }}
+
         />
       </View>
       <Text style={styles.title}>Signup</Text>
@@ -39,8 +40,32 @@ const SignupScreen = () => {
           placeholder="Confirm Password"
           value={confirmPassword}
           secureTextEntry
+
         />
       </View>
+      <View style={styles.content}>
+        <Text style={styles.title}>Signup</Text>
+
+        <View style={styles.inputContainer}>
+          <StandardTextInput
+            onChange={(text) => setUsername(text)}
+            placeholder="Username"
+            value={username}
+          />
+          <StandardTextInput
+            onChange={(text) => setPassword(text)}
+            placeholder="Password"
+            value={password}
+            secureTextEntry
+          />
+          <StandardTextInput
+            onChange={(text) => setConfirmPassword(text)}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            secureTextEntry
+          />
+        </View>
+
 
       <StandardButton
         color={theme.lightColors.mainGreen}
@@ -52,13 +77,40 @@ const SignupScreen = () => {
         icon={null}
         containerStyle={{ width: "60%" }}
       />
+
+        <View style={styles.caption}>
+          <StandardButton
+            title="Log into Your Account"
+            size="sm"
+            type="clear"
+            titleStyle={{
+              color: theme.lightColors.mainTextColor,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => navigation.navigate("Login")}
+            icon={null}
+          />
+        </View>
+
+        <StandardButton
+          color={theme.lightColors.mainGreen}
+          title="Signup"
+          size="lg"
+          onPress={handleSignup}
+          type="solid"
+          titleStyle={{ color: theme.darkColors.mainBlack }}
+          icon={null}
+          containerStyle={{ width: "60%" }}
+        />
+      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: theme.darkColors.mainBlack,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -80,7 +132,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#FFFFFF",
+
+    color: theme.lightColors.mainTextColor,
+
   },
   inputContainer: {
     width: "100%",
@@ -88,7 +142,11 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   caption: {
+
     borderWidth: 1,
+
+    marginBottom: 24,
+
   },
 });
 export default SignupScreen;
