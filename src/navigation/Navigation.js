@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthContext } from "../context/AuthProvider";
 import AdminStack from "./stacks/AdminStack";
 import DonorStack from "./stacks/DonorStack";
 import AuthStack from "./stacks/AuthStack";
 
 const Navigation = () => {
-  // const username = "admin@streetcanvas.com"; // Add Context and check if username submitted on login is `Admin`
-  const username = null;
+  const { auth } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        {!username ? (
-          <AuthStack />
-        ) : username !== "Admin" ? (
+        {auth && auth.username === "Admin" ? (
           <AdminStack />
-        ) : (
+        ) : auth && auth.username === "Donor" ? (
           <DonorStack />
+        ) : (
+          <AuthStack />
         )}
       </View>
     </NavigationContainer>

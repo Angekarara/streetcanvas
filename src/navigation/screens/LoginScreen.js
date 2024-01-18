@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { AuthContext } from "../../context/AuthProvider";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../theme/index";
 
 const LoginScreen = ({ navigation }) => {
+  const { auth, login } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (username === "Admin") navigation.navigate("Admin Dashboard");
-    navigation.navigate("Donor Dashboard");
+  /**
+   * Simple login logic that checks the username only
+   */
+  const handleLogin = async () => {
+    await login({ username, password });
+
+    if (auth && auth.username === "Admin") {
+      navigation.navigate("Admin Dashboard");
+    } else if (auth && auth.username === "Donor") {
+      navigation.navigate("Donor Dashboard");
+    }
   };
 
   return (
@@ -51,7 +61,6 @@ const LoginScreen = ({ navigation }) => {
             }}
             onPress={() => navigation.navigate("Signup")}
             icon={null}
-            containerStyle={{ width: "35%" }}
           />
         </View>
 
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   caption: {
-    borderWidth: 1,
+    marginBottom: 24,
   },
 });
 

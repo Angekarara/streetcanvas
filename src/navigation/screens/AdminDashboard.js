@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import ListCard from "../../components/ListCard/ListCard";
+import theme from "../../theme";
 
 const data = [
   {
@@ -84,11 +85,13 @@ const AdminDashboard = ({ navigation }) => {
             title="Register New Kid"
             size="lg"
             type="solid"
-            titleStyle={{ color: "#FFFFFF" }}
+            titleStyle={{ color: theme.lightColors.mainTextColor }}
             onPress={() => console.log("Register Kid...")}
             icon={null}
-            color={"primary"}
-            containerStyle={{ width: "100%" }}
+            color={theme.lightColors.mainGreen}
+            containerStyle={{
+              width: "100%",
+            }}
           />
         </View>
 
