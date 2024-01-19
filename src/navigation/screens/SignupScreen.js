@@ -18,10 +18,9 @@ const SignupScreen = ({ navigation }) => {
         <Image
           source={require("../../../assets/logo.png")}
           style={{ width: 100 }}
-
         />
       </View>
-      <Text style={styles.title}>Signup</Text>
+      {/* <Text style={styles.title}>Signup</Text>
 
       <View style={styles.inputContainer}>
         <StandardTextInput
@@ -42,7 +41,7 @@ const SignupScreen = ({ navigation }) => {
           secureTextEntry
 
         />
-      </View>
+      </View> */}
       <View style={styles.content}>
         <Text style={styles.title}>Signup</Text>
 
@@ -51,32 +50,34 @@ const SignupScreen = ({ navigation }) => {
             onChange={(text) => setUsername(text)}
             placeholder="Username"
             value={username}
+            inputStyle={{ color: "#FFFFFF" }}
           />
           <StandardTextInput
             onChange={(text) => setPassword(text)}
             placeholder="Password"
             value={password}
+            inputStyle={{ color: "#FFFFFF" }}
             secureTextEntry
           />
           <StandardTextInput
             onChange={(text) => setConfirmPassword(text)}
             placeholder="Confirm Password"
             value={confirmPassword}
+            inputStyle={{ color: "#FFFFFF" }}
             secureTextEntry
           />
         </View>
 
-
-      <StandardButton
-        color={theme.lightColors.mainGreen}
-        title="Signup"
-        size="lg"
-        onPress={handleSignup}
-        type="solid"
-        titleStyle={{ color: "#000000" }}
-        icon={null}
-        containerStyle={{ width: "60%" }}
-      />
+        {/* <StandardButton
+          color={theme.lightColors.mainGreen}
+          title="Signup"
+          size="lg"
+          onPress={handleSignup}
+          type="solid"
+          titleStyle={{ color: "#000000" }}
+          icon={null}
+          containerStyle={{ width: "60%" }}
+        /> */}
 
         <View style={styles.caption}>
           <StandardButton
@@ -103,7 +104,6 @@ const SignupScreen = ({ navigation }) => {
           containerStyle={{ width: "60%" }}
         />
       </View>
-
     </View>
   );
 };
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoContainer: {
-    marginBottom: 44,
+    marginBottom: 70,
   },
   content: {
     backgroundColor: theme.darkColors.darkGray,
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     color: theme.lightColors.mainTextColor,
-
   },
   inputContainer: {
     width: "100%",
@@ -142,11 +141,9 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   caption: {
-
     borderWidth: 1,
 
     marginBottom: 24,
-
   },
 });
 export default SignupScreen;
