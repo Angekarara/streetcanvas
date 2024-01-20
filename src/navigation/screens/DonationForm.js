@@ -8,7 +8,6 @@ const DonationForm = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
-  const [yourLocation, setYourLocation] = useState("");
 
   const handleSubmit = () => {
     // Handle donation submission logic here
@@ -16,7 +15,6 @@ const DonationForm = () => {
     console.log("Email:", email);
     console.log("Phone Number:", phoneNumber);
     console.log("Location:", location);
-    console.log("Your Location:", yourLocation);
   };
   return (
     <ScrollView style={styles.content}>
@@ -55,14 +53,6 @@ const DonationForm = () => {
             placeholder="Enter location"
             value={location}
             onChangeText={setLocation}
-          />
-
-          <Text style={styles.formText}>Your Location</Text>
-          <TextInput
-            style={styles.formInput}
-            placeholder="Enter your location"
-            value={yourLocation}
-            onChangeText={setYourLocation}
           />
 
           <StandardButton
