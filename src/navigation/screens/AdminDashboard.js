@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import ListCard from "../../components/ListCard/ListCard";
 import theme from "../../theme";
+import RegisterForm from "./RegisterForm";
 
 const data = [
   {
@@ -56,6 +57,10 @@ const AdminDashboard = ({ navigation }) => {
   const handleDetailsScreen = (kid) => {
     navigation.navigate("Kid Details", { kid: kid, role: "Admin" });
   };
+  const handleRegisterKid = () => {
+    navigation.navigate("Register Form");
+    console.log("Register Kid...");
+  };
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -86,7 +91,7 @@ const AdminDashboard = ({ navigation }) => {
             size="lg"
             type="solid"
             titleStyle={{ color: theme.lightColors.mainTextColor }}
-            onPress={() => console.log("Register Kid...")}
+            onPress={() => handleRegisterKid()}
             icon={null}
             color={theme.lightColors.mainGreen}
             containerStyle={{
