@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import ListCard from "../../components/ListCard/ListCard";
 import theme from "../../theme";
+import { useEffect } from "react";
+import axios from "axios";
 
 const data = [
   {
@@ -53,13 +55,23 @@ const kidsData = [
 ];
 
 const AdminDashboard = ({ navigation }) => {
-  const handleDetailsScreen = (kid) => {
-    navigation.navigate("Kid Details", { kid: kid, role: "Admin" });
+  const [kids, setKids] = useState([]);
+  const handleDetailsScreen = async(kid) => {
+    const res = await axios.get(`https://donation-api-2yeu.onrender.com/kids/single/${kid._id}`)
+  
+    navigation.navigate("Kid Details", { kid: res.data.kid, role: "Admin" });
   };
-  const handleRegisterKid = () => {
-    navigation.navigate("Register Form");
-    console.log("Register Kid...");
-  };
+  useEffect(() => {
+    
+  }, []);
+  useEffect(() => {
+    const getAllKids = async () => {
+      const response = await axios.get("https://donation-api-2yeu.onrender.com/kids/all")
+      setKids(response.data.kids)
+    }
+    getAllKids()
+  },[])
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -123,9 +135,9 @@ const AdminDashboard = ({ navigation }) => {
           </View>
         ))}
 
-        {kidsData.map((kid) => (
+        {kids.map((kid,index) => (
           <ListCard
-            key={kid.id}
+            key={index}
             kid={kid}
             onPress={() => handleDetailsScreen(kid)}
           />

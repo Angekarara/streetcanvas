@@ -4,12 +4,27 @@ import { Icon } from "@rneui/themed";
 import { AuthContext } from "../../context/AuthProvider";
 import Logo from "../Logo/Logo";
 import StandardButton from "../StandardButton/StandardButton";
+import * as SecureStore from 'expo-secure-store';
+import { useNavigation } from "@react-navigation/native";
+import { setAuthLoaded, setAuthStatus, setAuthToken } from "../../redux/authReducer";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
-  const { logout } = useContext(AuthContext);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  // const { logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await SecureStore.deleteItemAsync('token')
+      await SecureStore.deleteItemAsync('user')
+      dispatch(setAuthToken(null));
+      dispatch(setAuthStatus(false));
+      dispatch(setAuthLoaded(true));
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

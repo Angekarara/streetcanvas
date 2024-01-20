@@ -4,16 +4,20 @@ import { ThemeProvider } from "@rneui/themed";
 import theme from "./src/theme";
 import { AuthProvider } from "./src/context/AuthProvider";
 import Navigation from "./src/navigation/Navigation";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <SafeAreaView style={styles.container}>
-          <Navigation />
-        </SafeAreaView>
-      </ThemeProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <SafeAreaView style={styles.container}>
+            <Navigation />
+          </SafeAreaView>
+        </ThemeProvider>
+      </AuthProvider>
+    </Provider>
   );
 }
 

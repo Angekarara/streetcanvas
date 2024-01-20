@@ -8,10 +8,11 @@ import DonationForm from "../screens/DonationForm";
 const Stack = createNativeStackNavigator();
 
 const DonorStack = () => {
+    
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Donor Dashboard"
+        name="DonorDashboard" 
         component={DonorDashboard}
         options={{ header: () => <Header /> }}
       />

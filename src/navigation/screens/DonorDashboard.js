@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import ListCard from "../../components/ListCard/ListCard";
+import { Token } from "../../redux/Token";
+import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
+
 
 const data = [
   {
@@ -51,9 +55,25 @@ const kidsData = [
 ];
 
 const DonorDashboard = ({ navigation }) => {
-  const handleDetailsScreen = (kid) => {
-    navigation.navigate("Kid Details", { kid: kid, role: "Donor" });
+
+  const [kids, setKids] = useState([]);
+  const handleDetailsScreen = async(kid) => {
+    const res = await axios.get(`https://donation-api-2yeu.onrender.com/kids/single/${kid._id}`)
+  
+    navigation.navigate("Kid Details", { kid: res.data.kid, role: "Admin" });
   };
+
+  useEffect(() => {
+    
+  }, []);
+  useEffect(() => {
+    const getAllKids = async () => {
+      const response = await axios.get("https://donation-api-2yeu.onrender.com/kids/all")
+      setKids(response.data.kids)
+    }
+    getAllKids()
+  },[])
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -102,9 +122,9 @@ const DonorDashboard = ({ navigation }) => {
           </View>
         ))}
 
-        {kidsData.map((kid) => (
+        {kids.map((kid,index) => (
           <ListCard
-            key={kid.id}
+            key={index}
             kid={kid}
             onPress={() => handleDetailsScreen(kid)}
           />

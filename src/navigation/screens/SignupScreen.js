@@ -1,16 +1,83 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Alert } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import StandardTextInput from "../../components/StandardTextInput/StandardTextInput";
 import theme from "../../theme/index";
+import { Feather } from '@expo/vector-icons';
+import axios from "axios";
 
 const SignupScreen = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState({ value: "" });
+  const [password, setPassword] = useState({ value: "" });
+  const [email, setEmail] = useState({ value: "" });
+  const [phoneNumber, setPhoneNumber] = useState({ value: "" });
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSignup = () => {
-    console.log("signup button pressed");
+  const passwordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const onUsernameChange = (text) => {
+    if (text !== "") {
+      setUsername({ value: text });
+    } else {
+      setUsername({ value: text, message: "Write your Username" });
+    }
+  }
+  const onEmailChange = (text) => {
+    if (text !== "") {
+      setEmail({ value: text });
+    } else {
+      setEmail({ value: text, message: "Write your valid email" });
+    }
+  }
+
+  const onPhoneNumberChange = (text) => {
+    if (text !== "") {
+      setPhoneNumber({ value: text });
+    } else {
+      setPhoneNumber({ value: text, message: "Write your PhoneNumber" });
+    }
+  }
+
+  const onPasswordChange = (text) => {
+    if (text !== "") {
+      setPassword({ value: text });
+    } else {
+      setPassword({ value: text, message: "Enter your Password" });
+    }
+  };
+
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    if (username.value == null || username.value == "") {
+      setUsername({ message: "Write your username" })
+    } else if (email.value == null || email.value == "" || !email.value.includes("@")) {
+      setEmail({ message: "Write your valid email" })
+    } else if (phoneNumber.value == null || phoneNumber.value == "") {
+      setPhoneNumber({ message: "Write your PhoneNumber" })
+    } else if (password.value == null || password.value == "") {
+      setPassword({ message: "Enter your Password with" })
+    } else {
+      const payload = {
+        username: username.value,
+        email: email.value,
+        phoneNumber: phoneNumber.value,
+        password: password.value
+      }
+      setLoading(true)
+      const response = await axios.post("https://donation-api-2yeu.onrender.com/users/register", payload,
+        {
+          "Content-Type": "application/json"
+        })
+      setLoading(false)
+      Alert.alert("Signup Successfull")
+      navigation.navigate("Login", response.data)
+
+    }
   };
   return (
     <View style={styles.container}>
@@ -26,7 +93,7 @@ const SignupScreen = ({ navigation }) => {
         <StandardTextInput
           onChange={(text) => setUsername(text)}
           placeholder="Username"
-          value={username}
+         
         />
         <StandardTextInput
           onChange={(text) => setPassword(text)}
@@ -47,37 +114,72 @@ const SignupScreen = ({ navigation }) => {
 
         <View style={styles.inputContainer}>
           <StandardTextInput
-            onChange={(text) => setUsername(text)}
+            onChange={(e) => onUsernameChange(e)}
             placeholder="Username"
             value={username}
             inputStyle={{ color: "#FFFFFF" }}
           />
+          <Text style={{ color: "red" }}>{username.message}</Text>
           <StandardTextInput
-            onChange={(text) => setPassword(text)}
-            placeholder="Password"
-            value={password}
-            inputStyle={{ color: "#FFFFFF" }}
-            secureTextEntry
+            onChange={(e) => onEmailChange(e)}
+            placeholder="Email"
           />
+          <Text style={{ color: "red" }}>{email.message}</Text>
           <StandardTextInput
+            onChange={(e) => onPhoneNumberChange(e)}
+            placeholder="Phone Number"
+            keyboardType='numeric'
+          />
+          <Text style={{ color: "red" }}>{phoneNumber.message}</Text>
+          <StandardTextInput
+            onChange={(e) => onPasswordChange(e)}
+            placeholder="Password"
+            secureTextEntry={!showPassword}
+          />
+          <Text style={{ color: "red" }}>{password.message}</Text>
+          <Feather
+            name={showPassword ? "eye-off" : "eye"}
+            size={24} color="white"
+            style={{ position: "absolute", right: 55, top: 300 }}
+            onPress={passwordVisibility}
+          />
+
+          {/* <StandardTextInput
             onChange={(text) => setConfirmPassword(text)}
             placeholder="Confirm Password"
             value={confirmPassword}
             inputStyle={{ color: "#FFFFFF" }}
             secureTextEntry
-          />
+          /> */}
         </View>
 
-        {/* <StandardButton
-          color={theme.lightColors.mainGreen}
-          title="Signup"
-          size="lg"
-          onPress={handleSignup}
-          type="solid"
-          titleStyle={{ color: "#000000" }}
-          icon={null}
-          containerStyle={{ width: "60%" }}
-        /> */}
+
+        {
+          loading ? (
+            <StandardButton
+              color={theme.lightColors.mainGreen}
+              title="loading..."
+              size="lg"
+              onPress={handleSignup}
+              type="solid"
+              titleStyle={{ color: "#000000" }}
+              icon={null}
+              containerStyle={{ width: "60%" }}
+            />
+          ) : (
+            <StandardButton
+              color={theme.lightColors.mainGreen}
+              title="Signup"
+              size="lg"
+              onPress={handleSignup}
+              type="solid"
+              titleStyle={{ color: "#000000" }}
+              icon={null}
+              containerStyle={{ width: "60%" }}
+            />
+          )
+
+        }
 
         <View style={styles.caption}>
           <StandardButton
@@ -93,7 +195,7 @@ const SignupScreen = ({ navigation }) => {
           />
         </View>
 
-        <StandardButton
+        {/* <StandardButton
           color={theme.lightColors.mainGreen}
           title="Signup"
           size="lg"
@@ -102,7 +204,7 @@ const SignupScreen = ({ navigation }) => {
           titleStyle={{ color: theme.darkColors.mainBlack }}
           icon={null}
           containerStyle={{ width: "60%" }}
-        />
+        /> */}
       </View>
     </View>
   );

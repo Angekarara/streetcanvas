@@ -9,14 +9,16 @@ const ListCard = ({ kid, onPress }) => {
     >
       <View style={styles.avatarContainer}>
         <Image
-          source={require("../../../assets/kid.jpg")}
+          source={{uri: kid.photo}}
           style={styles.avatar}
         />
       </View>
 
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.title}>{`${kid.name}, ${kid.age} y`}</Text>
-        <Text style={styles.text}>{kid.description}</Text>
+      <View style={styles.descriptionContainer} >
+        <Text style={styles.title}>{`${kid.FullNames}, ${kid.Location}`}</Text>
+        <Text style={styles.text}>{kid.dateOfBirth}</Text>
+        <Text style={styles.text}>{kid.phoneNumber}</Text>
+        
       </View>
     </TouchableOpacity>
   );
@@ -33,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: "#A7E821",
     overflow: "hidden",
+   
   },
   avatarContainer: {
     marginRight: 12,
