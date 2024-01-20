@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "../../components/Header/Header";
 import AdminDashboard from "../screens/AdminDashboard";
 import KidDetails from "../screens/KidDetails";
+import RegisterForm from "../screens/RegisterForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,11 @@ const AdminStack = () => {
       <Stack.Screen
         name="Kid Details"
         component={KidDetails}
+        options={{ header: () => <Header /> }}
+      />
+      <Stack.Screen
+        name="Register Form"
+        component={RegisterForm}
         options={{ header: () => <Header /> }}
       />
     </Stack.Navigator>

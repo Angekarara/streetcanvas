@@ -61,7 +61,6 @@ const AdminDashboard = ({ navigation }) => {
   
     navigation.navigate("Kid Details", { kid: res.data.kid, role: "Admin" });
   };
-
   useEffect(() => {
     
   }, []);
@@ -72,6 +71,7 @@ const AdminDashboard = ({ navigation }) => {
     }
     getAllKids()
   },[])
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -102,7 +102,7 @@ const AdminDashboard = ({ navigation }) => {
             size="lg"
             type="solid"
             titleStyle={{ color: theme.lightColors.mainTextColor }}
-            onPress={() => console.log("Register Kid...")}
+            onPress={() => handleRegisterKid()}
             icon={null}
             color={theme.lightColors.mainGreen}
             containerStyle={{

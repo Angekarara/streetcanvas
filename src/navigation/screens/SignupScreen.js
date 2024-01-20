@@ -85,7 +85,6 @@ const SignupScreen = ({ navigation }) => {
         <Image
           source={require("../../../assets/logo.png")}
           style={{ width: 100 }}
-
         />
       </View>
       {/* <Text style={styles.title}>Signup</Text>
@@ -117,13 +116,13 @@ const SignupScreen = ({ navigation }) => {
           <StandardTextInput
             onChange={(e) => onUsernameChange(e)}
             placeholder="Username"
-
+            value={username}
+            inputStyle={{ color: "#FFFFFF" }}
           />
           <Text style={{ color: "red" }}>{username.message}</Text>
           <StandardTextInput
             onChange={(e) => onEmailChange(e)}
             placeholder="Email"
-
           />
           <Text style={{ color: "red" }}>{email.message}</Text>
           <StandardTextInput
@@ -149,6 +148,7 @@ const SignupScreen = ({ navigation }) => {
             onChange={(text) => setConfirmPassword(text)}
             placeholder="Confirm Password"
             value={confirmPassword}
+            inputStyle={{ color: "#FFFFFF" }}
             secureTextEntry
           /> */}
         </View>
@@ -206,7 +206,6 @@ const SignupScreen = ({ navigation }) => {
           containerStyle={{ width: "60%" }}
         /> */}
       </View>
-
     </View>
   );
 };
@@ -219,7 +218,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoContainer: {
-    marginBottom: 44,
+    marginBottom: 70,
   },
   content: {
     backgroundColor: theme.darkColors.darkGray,
@@ -237,7 +236,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     color: theme.lightColors.mainTextColor,
-
   },
   inputContainer: {
     width: "100%",
@@ -245,11 +243,9 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   caption: {
-
     borderWidth: 1,
 
     marginBottom: 24,
-
   },
 });
 export default SignupScreen;
