@@ -5,64 +5,18 @@ import ListCard from "../../components/ListCard/ListCard";
 import theme from "../../theme";
 import { useEffect } from "react";
 import axios from "axios";
-
-const data = [
-  {
-    id: 1,
-    district: "Kicukiro",
-    kids: 123,
-    sponsors: 2,
-  },
-  {
-    id: 2,
-    district: "Gasabo",
-    kids: 110,
-    sponsors: 3,
-  },
-  {
-    id: 3,
-    district: "Huye",
-    kids: 83,
-    sponsors: 9,
-  },
-];
-
-const kidsData = [
-  {
-    id: 1,
-    name: "PIYERI",
-    age: "12",
-    location: "Kigali, Nyamirambo",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-  {
-    id: 2,
-    name: "PIYERI",
-    age: "12",
-    location: "Kigali, Kicukiro",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-  {
-    id: 3,
-    name: "PIYERI",
-    age: "12",
-    location: "Huye",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-];
+import { TouchableOpacity } from "react-native";
 
 const AdminDashboard = ({ navigation }) => {
   const [kids, setKids] = useState([]);
-  const handleDetailsScreen = async(kid) => {
+  const [length, setLength] = useState(0);
+  const handleDetailsScreen = async (kid) => {
     const res = await axios.get(`https://donation-api-2yeu.onrender.com/kids/single/${kid._id}`)
-  
+
     navigation.navigate("Kid Details", { kid: res.data.kid, role: "Admin" });
   };
   useEffect(() => {
-    
+
   }, []);
   useEffect(() => {
     const getAllKids = async () => {
@@ -70,33 +24,30 @@ const AdminDashboard = ({ navigation }) => {
       setKids(response.data.kids)
     }
     getAllKids()
-  },[])
+  }, [kids])
 
   const handleRegisterKid = () => {
     navigation.navigate("Register Form");
   }
 
+  useEffect(() => {
+    const getAllSponsors = async () => {
+      const response = await axios.get("https://donation-api-2yeu.onrender.com/users/length")
+      setLength(response.data.data)
+    }
+    getAllSponsors()
+  }, [])
+
+ 
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.section}>
+
           <View style={styles.metric}>
-            <View style={styles.metricNumber}>
-              <Text style={styles.metricNumberText}>45</Text>
-            </View>
-            <View>
-              <Text style={styles.metricNumberText}>Kids</Text>
-              <Text style={styles.text}>In your location</Text>
-            </View>
-          </View>
-          <View style={styles.metric}>
-            <View style={styles.metricNumber}>
-              <Text style={styles.metricNumberText}>34</Text>
-            </View>
-            <View>
-              <Text style={styles.metricNumberText}>Donation</Text>
-              <Text style={styles.text}>In your location</Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("DonationList")} style={styles.list}>
+              <Text style={styles.metricNumberText}>Donation List</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -115,31 +66,28 @@ const AdminDashboard = ({ navigation }) => {
           />
         </View>
 
-        {data.map((item) => (
-          <View key={item.id} style={[styles.section, styles.list]}>
-            <Text style={styles.text}>{item.id}.</Text>
-            <View style={styles.metric}>
-              <View style={styles.metricNumber}>
-                <Text style={styles.metricNumberText}>{item.kids}</Text>
-              </View>
-              <View>
-                <Text style={styles.metricNumberText}>Kids</Text>
-                <Text style={styles.text}>{item.district}</Text>
-              </View>
+
+        <View style={[styles.section, styles.list]}>
+          <View style={styles.metric}>
+            <View style={styles.metricNumber}>
+              <Text style={styles.metricNumberText}>{kids.length}</Text>
             </View>
-            <View style={styles.metric}>
-              <View style={styles.metricNumber}>
-                <Text style={styles.metricNumberText}>{item.sponsors}</Text>
-              </View>
-              <View>
-                <Text style={styles.metricNumberText}>Sponsors</Text>
-                <Text style={styles.text}>{item.district}</Text>
-              </View>
+            <View>
+              <Text style={styles.metricNumberText}>Kids</Text>
             </View>
           </View>
-        ))}
+          <View style={styles.metric}>
+            <View style={styles.metricNumber}>
+              <Text style={styles.metricNumberText}>{length }</Text>
+            </View>
+            <View>
+              <Text style={styles.metricNumberText}>Sponsors</Text>
+            </View>
+          </View>
+        </View>
 
-        {kids.map((kid,index) => (
+
+        {kids.map((kid, index) => (
           <ListCard
             key={index}
             kid={kid}

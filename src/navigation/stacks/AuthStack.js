@@ -6,7 +6,6 @@ import DonorDashboard from "../screens/DonorDashboard";
 import Header from "../../components/Header/Header";
 import AdminDashboard from "../screens/AdminDashboard";
 import KidDetails from "../screens/KidDetails";
-import RegisterForm from "../screens/RegisterForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,11 +37,7 @@ const AuthStack = () => {
         component={KidDetails}
         options={{ header: () => <Header /> }}
       />
-       {/* <Stack.Screen
-        name="Register Form"
-        component={RegisterForm}
-        options={{ header: () => <Header /> }}
-      /> */}
+      
     </Stack.Navigator>
   );
 };

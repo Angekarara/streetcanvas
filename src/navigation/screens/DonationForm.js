@@ -1,20 +1,39 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import theme from "../../theme";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
-const DonationForm = () => {
-  const [fullNames, setFullNames] = useState("");
+const DonationForm = ({ route }) => {
+  const { kid } = route.params;
+  const [FullNames, setFullNames] = useState("");
   const [email, setEmail] = useState("");
+  const [Location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
-  const handleSubmit = () => {
-    // Handle donation submission logic here
-    console.log("Full Names:", fullNames);
-    console.log("Email:", email);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Location:", location);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true)
+      const payload = {
+        FullNames,
+        email,
+        Location,
+        phoneNumber,
+        kidId: kid._id
+      }
+      const response = await axios.post("https://donation-api-2yeu.onrender.com/donations/register", payload)
+
+      console.log(response.data)
+      alert("Donation made successfully")
+      navigation.navigate("Admin Dashboard")
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <ScrollView style={styles.content}>
@@ -25,8 +44,8 @@ const DonationForm = () => {
           <TextInput
             style={styles.formInput}
             placeholder="Enter full names"
-            value={fullNames}
-            onChangeText={setFullNames}
+            value={FullNames}
+            onChangeText={(e) => setFullNames(e)}
           />
 
           <Text style={styles.formText}>Email</Text>
@@ -34,7 +53,7 @@ const DonationForm = () => {
             style={styles.formInput}
             placeholder="Enter email"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(e) => setEmail(e)}
             keyboardType="email-address"
           />
 
@@ -43,7 +62,7 @@ const DonationForm = () => {
             style={styles.formInput}
             placeholder="Enter phone number"
             value={phoneNumber}
-            onChangeText={setPhoneNumber}
+            onChangeText={(e) => setPhoneNumber(e)}
             keyboardType="numeric"
           />
 
@@ -51,22 +70,39 @@ const DonationForm = () => {
           <TextInput
             style={styles.formInput}
             placeholder="Enter location"
-            value={location}
-            onChangeText={setLocation}
+            value={Location}
+            onChangeText={(e) => setLocation(e)}
           />
 
-          <StandardButton
-            title="Donate"
-            size="lg"
-            type="solid"
-            titleStyle={{ color: theme.lightColors.mainTextColor }}
-            onPress={handleSubmit}
-            icon={null}
-            color={theme.lightColors.mainGreen}
-            containerStyle={{
-              width: "100%",
-            }}
-          />
+          {
+            loading ? (
+              <StandardButton
+                title="Loading..."
+                size="lg"
+                type="solid"
+                titleStyle={{ color: theme.lightColors.mainTextColor }}
+                onPress={handleSubmit}
+                icon={null}
+                color={theme.lightColors.mainGreen}
+                containerStyle={{
+                  width: "100%",
+                }}
+              />
+            ) : (
+              <StandardButton
+                title="Donate"
+                size="lg"
+                type="solid"
+                titleStyle={{ color: theme.lightColors.mainTextColor }}
+                onPress={handleSubmit}
+                icon={null}
+                color={theme.lightColors.mainGreen}
+                containerStyle={{
+                  width: "100%",
+                }}
+              />
+            )
+          }
         </View>
       </View>
     </ScrollView>
