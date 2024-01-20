@@ -6,72 +6,130 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  ScrollView
 } from "react-native";
-import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from 'expo-image-picker';
 import StandardButton from "../../components/StandardButton/StandardButton";
 import theme from "../../theme";
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
 
 const RegisterForm = () => {
-  const [location, setLocation] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  const [Location, setLocation] = useState("");
+  const [FullNames, setFullNames] = useState("");
+  const [dascription, setDascription] = useState("")
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [photo, setPhoto] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleImagePicker = () => {
-    const options = {
-      title: "Select Image",
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
-      },
-    };
+  const  navigation = useNavigation()
+  const handleFileChange = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions");
+      return;
+    }
 
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else {
-        setSelectedImage(response);
-      }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+   
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
+    }
   };
+ 
+  const handleSubmit = async () => {
+    console.log("photo", photo)
+    const formData = new FormData();
+    formData.append("Location", Location);
+    formData.append("FullNames", FullNames);
+    formData.append("dascription", dascription);
+    formData.append("dateOfBirth", dateOfBirth);
+    formData.append("phoneNumber", phoneNumber);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Location:", location);
-    console.log("Full Name:", fullName);
-    console.log("Email:", email);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Selected Image:", selectedImage);
-  };
+    if (photo) {
+      const localUri = photo;
+      const filename = localUri.split("/").pop();
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1]}` : `image`;
+
+      formData.append("photo", {
+        uri: localUri,
+        name: new Date() + '_photo',
+        type: type,
+      });
+    };
+    try {
+      setLoading(true)
+      console.log(formData)
+      const response  = await axios.post("https://donation-api-2yeu.onrender.com/kids/register", 
+        formData,
+        {
+          headers: {
+              "Content-Type": "multipart/form-data",
+          },
+      })
+      consolelog(response)
+      alert("Kid registered successfully")
+      navigation.navigate("Admin Dashboard")
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <TouchableOpacity onPress={handleFileChange}>
+        {photo ? (
+          <Image
+            style={styles.image}
+            source={{
+              uri: photo,
+            }}
+          />
+        ) : (
+          <>
+
+            <Image
+              style={styles.image}
+              source={{
+                uri: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
+              }}
+            />
+            <Text style={styles.Text}>Click to upload</Text>
+          </>
+        )}
+      </TouchableOpacity>
       <Text style={styles.registerText}>Location</Text>
       <TextInput
         style={styles.registerInput}
         placeholder="Enter location"
-        value={location}
-        onChangeText={setLocation}
+        value={Location}
+        onChangeText={(text) => setLocation(text)}
       />
 
       <Text style={styles.registerText}>Full Name</Text>
       <TextInput
         style={styles.registerInput}
         placeholder="Enter full name"
-        value={fullName}
-        onChangeText={setFullName}
+        value={FullNames}
+        onChangeText={(text) => setFullNames(text)}
       />
 
-      <Text style={styles.registerText}>Email</Text>
+      <Text style={styles.registerText}>Date Of Birth</Text>
       <TextInput
         style={styles.registerInput}
         placeholder="Enter email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+        value={dateOfBirth}
+        onChangeText={(text) => setDateOfBirth(text)}
+       
       />
 
       <Text style={styles.registerText}>Phone Number</Text>
@@ -82,27 +140,43 @@ const RegisterForm = () => {
         onChangeText={setPhoneNumber}
         keyboardType="numeric"
       />
-      {/* 
-      <TouchableOpacity onPress={handleImagePicker}>
-        <Text>Choose Image</Text>
-      </TouchableOpacity> */}
-      <TouchableOpacity onPress={handleImagePicker}>
-        <Text style={styles.chooseImageText}>Choose Image</Text>
-      </TouchableOpacity>
-
-      <StandardButton
-        title="Register"
-        size="lg"
-        type="solid"
-        titleStyle={{ color: theme.lightColors.mainTextColor }}
-        onPress={() => console.log("registered")}
-        icon={null}
-        color={theme.lightColors.mainGreen}
-        containerStyle={{
-          width: "100%",
-        }}
+      <Text style={styles.registerText}>Description</Text>
+      <TextInput
+        style={styles.registerInput}
+        placeholder="Enter email"
+        value={dascription}
+        onChangeText={(text) => setDascription(text)}
       />
-    </View>
+
+     {loading ?
+           <StandardButton
+           title="Loading..."
+           size="lg"
+           type="solid"
+           titleStyle={{ color: theme.lightColors.mainTextColor }}
+           onPress={handleSubmit}
+           icon={null}
+           color={theme.lightColors.mainGreen}
+           containerStyle={{
+             width: "100%",
+           }}
+         />
+         :
+         <StandardButton
+         title="Register"
+         size="lg"
+         type="solid"
+         titleStyle={{ color: theme.lightColors.mainTextColor }}
+         onPress={handleSubmit}
+         icon={null}
+         color={theme.lightColors.mainGreen}
+         containerStyle={{
+           width: "100%",
+         }}
+       />
+
+     }
+    </ScrollView>
   );
 };
 
@@ -122,6 +196,11 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     color: "white",
   },
+  Text: {
+    color: "white",
+    fontSize: 16,
+    alignSelf: 'center'
+  },
   registerText: {
     color: "white",
   },
@@ -129,6 +208,13 @@ const styles = StyleSheet.create({
     color: theme.lightColors.mainGreen,
     fontSize: 16,
     marginVertical: 8,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 20,
+    alignSelf: 'center'
   },
 });
 

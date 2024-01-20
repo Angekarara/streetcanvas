@@ -72,6 +72,10 @@ const AdminDashboard = ({ navigation }) => {
     getAllKids()
   },[])
 
+  const handleRegisterKid = () => {
+    navigation.navigate("Register Form");
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
