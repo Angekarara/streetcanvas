@@ -1,32 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import screen from "../../utils/screen";
 import theme from "../../theme";
+import * as SecureStore from 'expo-secure-store';
 
 const KidDetails = ({ route, navigation }) => {
-  const { kid, role } = route.params;
+  const { kid } = route.params;
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      let user = await SecureStore.getItemAsync("user");
+      // console.log(user);
+      return JSON.parse(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUser();
+      setUser(user);
+
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <ScrollView style={styles.content}>
       <View style={styles.container}>
         <View style={[styles.avatar, styles.section]}>
           <Image
-            source={require("../../../assets/kid.jpg")}
+            source={{ uri: kid.photo }}
             style={styles.avatar}
           />
         </View>
 
         <View style={styles.section}>
-          <Text style={[styles.text, styles.title]}>{kid.name}</Text>
-          <Text style={[styles.text, styles.caption]}>{kid.age}</Text>
-          <Text style={[styles.text, styles.caption]}>{kid.location}</Text>
+          <Text style={[styles.text, styles.title]}>{kid.FullNames}</Text>
+          <Text style={[styles.text, styles.caption]}>{kid.dateOfBirth}</Text>
+          <Text style={[styles.text, styles.caption]}>{kid.Location}</Text>
+          <Text style={[styles.text, styles.caption]}>{kid.phoneNumber}</Text>
         </View>
         <View style={styles.section}>
-          <Text style={styles.text}>{kid.description}</Text>
+          <Text style={styles.text}>{kid.dascription}</Text>
         </View>
 
-        {role === "Admin" ? (
+        {user && user.role === "admin" ? (
           <View style={styles.section}>
             <StandardButton
               title="Remove"
@@ -39,7 +63,7 @@ const KidDetails = ({ route, navigation }) => {
               containerStyle={{ width: "50%" }}
             />
           </View>
-        ) : role === "Donor" ? (
+        ) :  (
           <View style={[styles.section, styles.buttonsGroup]}>
             <StandardButton
               title="Adopt"
@@ -64,7 +88,7 @@ const KidDetails = ({ route, navigation }) => {
               containerStyle={{ width: "35%" }}
             />
           </View>
-        ) : null}
+        ) }
       </View>
     </ScrollView>
   );
