@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import ListCard from "../../components/ListCard/ListCard";
 import theme from "../../theme";
-import RegisterForm from "./RegisterForm";
 
 const data = [
   {
