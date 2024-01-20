@@ -22,7 +22,7 @@ const DonorStack = () => {
         options={{ header: () => <Header /> }}
       />
       <Stack.Screen
-        name="Donation Form"
+        name="DonationForm"
         component={DonationForm}
         options={{ header: () => <Header /> }}
       />

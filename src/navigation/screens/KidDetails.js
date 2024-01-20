@@ -4,6 +4,7 @@ import StandardButton from "../../components/StandardButton/StandardButton";
 import screen from "../../utils/screen";
 import theme from "../../theme";
 import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
 
 const KidDetails = ({ route, navigation }) => {
   const { kid } = route.params;
@@ -29,7 +30,16 @@ const KidDetails = ({ route, navigation }) => {
     fetchData();
   }, []);
 
-
+  const deleteKid = async() =>{
+    try {
+       await axios.delete(`https://donation-api-2yeu.onrender.com/kids/delete/${kid._id}`)
+      alert("Kid removed successfully")
+      navigation.navigate("Admin Dashboard")
+    }catch(error){
+      console.log(error)  
+    }
+  }
+ 
   return (
     <ScrollView style={styles.content}>
       <View style={styles.container}>
@@ -57,13 +67,13 @@ const KidDetails = ({ route, navigation }) => {
               size="lg"
               type="solid"
               titleStyle={{ color: theme.lightColors.mainTextColor }}
-              onPress={() => console.log("Remove Kid...")}
+              onPress={deleteKid}
               icon={null}
               color={theme.lightColors.mainGreen}
               containerStyle={{ width: "50%" }}
             />
           </View>
-        ) :  (
+        ) : (
           <View style={[styles.section, styles.buttonsGroup]}>
             <StandardButton
               title="Adopt"
@@ -82,13 +92,13 @@ const KidDetails = ({ route, navigation }) => {
               size="lg"
               type="solid"
               titleStyle={{ color: theme.lightColors.mainTextColor }}
-              onPress={() => navigation.navigate("Donation Form", { kid: kid })}
+              onPress={() => navigation.navigate("DonationForm", { kid: kid })}
               icon={null}
               color={"mainGreen"}
               containerStyle={{ width: "35%" }}
             />
           </View>
-        ) }
+        )}
       </View>
     </ScrollView>
   );

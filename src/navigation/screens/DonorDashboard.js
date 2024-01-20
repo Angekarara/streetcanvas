@@ -6,57 +6,11 @@ import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
 
 
-const data = [
-  {
-    id: 1,
-    district: "Kicukiro",
-    kids: 123,
-    sponsors: 2,
-  },
-  {
-    id: 2,
-    district: "Gasabo",
-    kids: 110,
-    sponsors: 3,
-  },
-  {
-    id: 3,
-    district: "Huye",
-    kids: 83,
-    sponsors: 9,
-  },
-];
-
-const kidsData = [
-  {
-    id: 1,
-    name: "PIYERI",
-    age: "12",
-    location: "Kigali, Nyamirambo",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-  {
-    id: 2,
-    name: "PIYERI",
-    age: "12",
-    location: "Kigali, Kicukiro",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-  {
-    id: 3,
-    name: "PIYERI",
-    age: "12",
-    location: "Huye",
-    description:
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-  },
-];
-
 const DonorDashboard = ({ navigation }) => {
 
   const [kids, setKids] = useState([]);
+  const [length, setLength] = useState(0);
+  const [user, setUser] = useState(null);
   const handleDetailsScreen = async(kid) => {
     const res = await axios.get(`https://donation-api-2yeu.onrender.com/kids/single/${kid._id}`)
   
@@ -74,53 +28,66 @@ const DonorDashboard = ({ navigation }) => {
     getAllKids()
   },[])
 
+  useEffect(() => {
+    const getAllSponsors = async () => {
+      const response = await axios.get("https://donation-api-2yeu.onrender.com/users/length")
+      setLength(response.data.data)
+    }
+    getAllSponsors()
+  }, [])
+
+ 
+  const getUser = async () => {
+    try {
+      let user = await SecureStore.getItemAsync("user");
+      // console.log(user);
+      return JSON.parse(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUser();
+      setUser(user);
+
+    };
+
+    fetchData();
+  }, []);
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.section}>
+       <View style={styles.section}>
           <View style={styles.metric}>
-            <View style={styles.metricNumber}>
-              <Text style={styles.metricNumberText}>1200</Text>
-            </View>
-            <View>
-              <Text style={styles.metricNumberText}>Kids</Text>
-              <Text style={styles.text}>Available</Text>
-            </View>
-          </View>
-          <View style={styles.metric}>
-            <View style={styles.metricNumber}>
-              <Text style={styles.metricNumberText}>34</Text>
-            </View>
-            <View>
-              <Text style={styles.metricNumberText}>Kids</Text>
-              <Text style={styles.text}>In your location</Text>
+            <View style={{flexDirection:"row", alignItems:"center", gap:10}}>
+              <Text style={styles.metricNumberText}>Welcome back</Text>
+              <Text style={styles.text}>{user && user.username}</Text>
             </View>
           </View>
         </View>
-
-        {data.map((item) => (
-          <View key={item.id} style={[styles.section, styles.list]}>
-            <Text style={styles.text}>{item.id}.</Text>
+      <ScrollView>
+          <View  style={[styles.section, styles.list]}>
+            
             <View style={styles.metric}>
               <View style={styles.metricNumber}>
-                <Text style={styles.metricNumberText}>{item.kids}</Text>
+                <Text style={styles.metricNumberText}>{kids.length}</Text>
               </View>
               <View>
                 <Text style={styles.metricNumberText}>Kids</Text>
-                <Text style={styles.text}>{item.district}</Text>
               </View>
             </View>
             <View style={styles.metric}>
               <View style={styles.metricNumber}>
-                <Text style={styles.metricNumberText}>{item.sponsors}</Text>
+                <Text style={styles.metricNumberText}>{length}</Text>
               </View>
               <View>
                 <Text style={styles.metricNumberText}>Sponsors</Text>
-                <Text style={styles.text}>{item.district}</Text>
               </View>
             </View>
           </View>
-        ))}
+
 
         {kids.map((kid,index) => (
           <ListCard
@@ -153,7 +120,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: "#fff",
+    color: "#A7E821",
+    fontSize:20
   },
   metricNumber: {
     width: 54,

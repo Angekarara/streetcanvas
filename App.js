@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { ThemeProvider } from "@rneui/themed";
 import theme from "./src/theme";
+import 'react-native-gesture-handler';
 import { AuthProvider } from "./src/context/AuthProvider";
 import Navigation from "./src/navigation/Navigation";
 import { Provider } from "react-redux";
