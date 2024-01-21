@@ -44,7 +44,6 @@ const RegisterForm = () => {
   };
  
   const handleSubmit = async () => {
-    console.log("photo", photo)
     const formData = new FormData();
     formData.append("Location", Location);
     formData.append("FullNames", FullNames);

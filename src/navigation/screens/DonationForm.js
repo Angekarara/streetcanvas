@@ -36,10 +36,9 @@ const DonationForm = ({ route }) => {
     }
   };
   return (
-    <ScrollView style={styles.content}>
-      <View style={styles.container}>
-        <Text style={styles.text}>{"Donation form"}</Text>
-        <View style={styles.container}>
+    <ScrollView style={styles.container}>
+        <Text style={styles.Text}>Donation form</Text>
+        <View style={styles.content}>
           <Text style={styles.formText}>Full Names</Text>
           <TextInput
             style={styles.formInput}
@@ -104,7 +103,6 @@ const DonationForm = ({ route }) => {
             )
           }
         </View>
-      </View>
     </ScrollView>
   );
 };
@@ -128,26 +126,17 @@ const styles = StyleSheet.create({
   formText: {
     color: "white",
   },
+  content: {
+    marginTop: 20,
+  },
+  Text:{
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 24,
+  }
 });
 
 export default DonationForm;
-// };
 
-// const styles = StyleSheet.create({
-//   content: {
-//     flex: 1,
-//     backgroundColor: "#000",
-//   },
-//   container: {
-//     flex: 1,
-//     padding: 24,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   text: {
-//     color: "#fff",
-//     textAlign: "center",
-//   },
-// });
-
-// export default DonationForm;

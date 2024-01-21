@@ -7,6 +7,7 @@ import { AuthProvider } from "./src/context/AuthProvider";
 import Navigation from "./src/navigation/Navigation";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
+import AllStack from "./src/navigation/stacks/AllStack";
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <SafeAreaView style={styles.container}>
-            <Navigation />
+            <AllStack />
           </SafeAreaView>
         </ThemeProvider>
       </AuthProvider>

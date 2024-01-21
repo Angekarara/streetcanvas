@@ -18,7 +18,6 @@ const DonationList = () => {
         getAllDonations()
     }, [])
 
-    console.log("donations", donations)
     return (
         <View style={styles.container}>
             {

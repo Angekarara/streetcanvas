@@ -76,6 +76,10 @@ const SignupScreen = ({ navigation }) => {
       setLoading(false)
       Alert.alert("Signup Successfull")
       navigation.navigate("Login", response.data)
+      setUsername({ value: "" })
+      setEmail({ value: "" })
+      setPhoneNumber({ value: "" })
+      setPassword({ value: "" })
 
     }
   };
@@ -87,28 +91,6 @@ const SignupScreen = ({ navigation }) => {
           style={{ width: 100 }}
         />
       </View>
-      {/* <Text style={styles.title}>Signup</Text>
-
-      <View style={styles.inputContainer}>
-        <StandardTextInput
-          onChange={(text) => setUsername(text)}
-          placeholder="Username"
-         
-        />
-        <StandardTextInput
-          onChange={(text) => setPassword(text)}
-          placeholder="Password"
-          value={password}
-          secureTextEntry
-        />
-        <StandardTextInput
-          onChange={(text) => setConfirmPassword(text)}
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          secureTextEntry
-
-        />
-      </View> */}
       <View style={styles.content}>
         <Text style={styles.title}>Signup</Text>
 
