@@ -23,7 +23,6 @@ const LoginScreen = () => {
   }
 
   const handleLogin = async () => {
-    // await login({ username, password });
     setLoading(true)
     const response = await axios.post("https://donation-api-2yeu.onrender.com/users/login", {
       email: email,
@@ -42,6 +41,8 @@ const LoginScreen = () => {
     } else if (response.data.data.role === "user") {
       navigation.navigate("DonorDashboard");
     }
+    setEmail("")
+    setPassword("")
     setLoading(false)
   };
 

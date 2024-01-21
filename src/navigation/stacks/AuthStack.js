@@ -22,7 +22,7 @@ const AuthStack = () => {
         component={SignupScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="DonorDashboard"
         component={DonorDashboard}
         options={{ header: () => <Header /> }}
@@ -36,7 +36,7 @@ const AuthStack = () => {
         name="Kid Details"
         component={KidDetails}
         options={{ header: () => <Header /> }}
-      />
+      /> */}
       
     </Stack.Navigator>
   );

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Icon } from "@rneui/themed";
-import { AuthContext } from "../../context/AuthProvider";
 import Logo from "../Logo/Logo";
 import StandardButton from "../StandardButton/StandardButton";
 import * as SecureStore from 'expo-secure-store';
@@ -12,8 +11,7 @@ import { useDispatch } from "react-redux";
 const Header = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  // const { logout } = useContext(AuthContext);
-
+ 
   const handleLogout = async () => {
     try {
       await SecureStore.deleteItemAsync('token')
@@ -27,11 +25,37 @@ const Header = () => {
     }
   };
 
+  const [user, setUser] = useState(null);
+
+  const getUser = async () => {
+      try {
+          let storedUser = await SecureStore.getItemAsync('user');
+          return storedUser ? JSON.parse(storedUser) : null;
+      } catch (error) {
+          console.error('Error fetching user:', error);
+          return null;
+      }
+  };
+
+  useEffect(() => {
+      const fetchData = async () => {
+          const fetchedUser = await getUser();
+          setUser(fetchedUser);
+      };
+
+      fetchData();
+  }, []);
+
+  const handlePress = () => {
+    user.role === "admin" ?
+      ( navigation.navigate("Admin Dashboard") )
+      :( navigation.navigate("DonorDashboard"))
+  };
   return (
     <View style={styles.content}>
-      <View style={{ width: 100 }}>
+      <TouchableOpacity onPress={handlePress} style={{ width: 100 }}>
         <Logo width={111} height={30} />
-      </View>
+      </TouchableOpacity>
       <View>
         <StandardButton
           title="Sign Out"
