@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  ScrollView
+  ScrollView,
 } from "react-native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import StandardButton from "../../components/StandardButton/StandardButton";
 import theme from "../../theme";
 import { useNavigation } from "@react-navigation/core";
@@ -17,13 +17,13 @@ import axios from "axios";
 const RegisterForm = () => {
   const [Location, setLocation] = useState("");
   const [FullNames, setFullNames] = useState("");
-  const [dascription, setDascription] = useState("")
+  const [dascription, setDascription] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const  navigation = useNavigation()
+  const navigation = useNavigation();
   const handleFileChange = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
@@ -37,12 +37,12 @@ const RegisterForm = () => {
       aspect: [4, 3],
       quality: 1,
     });
-   
+
     if (!result.canceled) {
       setPhoto(result.assets[0].uri);
     }
   };
- 
+
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("Location", Location);
@@ -51,37 +51,54 @@ const RegisterForm = () => {
     formData.append("dateOfBirth", dateOfBirth);
     formData.append("phoneNumber", phoneNumber);
 
+    // if (photo) {
+    //   const localUri = photo;
+    //   const filename = localUri.split("/").pop();
+    //   const match = /\.(\w+)$/.exec(filename);
+    //  const type = match ? `image/${match[1]}` : `image`;
+
+    //   formData.append("photo", {
+    //     uri: localUri,
+    //     name: new Date() + "_photo",
+    //     type: type,
+    //   });
+    // }
     if (photo) {
       const localUri = photo;
       const filename = localUri.split("/").pop();
       const match = /\.(\w+)$/.exec(filename);
       const type = match ? `image/${match[1]}` : `image`;
 
+      const formattedFilename =
+        new Date().toISOString() + "_photo." + (match ? match[1] : "");
+      console.log("for", formattedFilename);
       formData.append("photo", {
         uri: localUri,
-        name: new Date() + '_photo',
+        name: formattedFilename,
         type: type,
       });
-    };
+    }
     try {
-      setLoading(true)
-      console.log(formData)
-      const response  = await axios.post("https://donation-api-2yeu.onrender.com/kids/register", 
+      setLoading(true);
+      console.log(formData);
+      const response = await axios.post(
+        "https://donation-api-2yeu.onrender.com/kids/register",
         formData,
         {
           headers: {
-              "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
-      })
-      consolelog(response)
-      alert("Kid registered successfully")
-      navigation.navigate("Admin Dashboard")
-      setLoading(false)
+        }
+      );
+      consolelog(response);
+      alert("Kid registered successfully");
+      navigation.navigate("Admin Dashboard");
+      setLoading(false);
     } catch (error) {
-      console.log(error)
-      setLoading(false)
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -95,7 +112,6 @@ const RegisterForm = () => {
           />
         ) : (
           <>
-
             <Image
               style={styles.image}
               source={{
@@ -128,7 +144,6 @@ const RegisterForm = () => {
         placeholder="Enter email"
         value={dateOfBirth}
         onChangeText={(text) => setDateOfBirth(text)}
-       
       />
 
       <Text style={styles.registerText}>Phone Number</Text>
@@ -136,7 +151,7 @@ const RegisterForm = () => {
         style={styles.registerInput}
         placeholder="Enter phone number"
         value={phoneNumber}
-        onChangeText={setPhoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
         keyboardType="numeric"
       />
       <Text style={styles.registerText}>Description</Text>
@@ -147,34 +162,33 @@ const RegisterForm = () => {
         onChangeText={(text) => setDascription(text)}
       />
 
-     {loading ?
-           <StandardButton
-           title="Loading..."
-           size="lg"
-           type="solid"
-           titleStyle={{ color: theme.lightColors.mainTextColor }}
-           onPress={handleSubmit}
-           icon={null}
-           color={theme.lightColors.mainGreen}
-           containerStyle={{
-             width: "100%",
-           }}
-         />
-         :
-         <StandardButton
-         title="Register"
-         size="lg"
-         type="solid"
-         titleStyle={{ color: theme.lightColors.mainTextColor }}
-         onPress={handleSubmit}
-         icon={null}
-         color={theme.lightColors.mainGreen}
-         containerStyle={{
-           width: "100%",
-         }}
-       />
-
-     }
+      {loading ? (
+        <StandardButton
+          title="Loading..."
+          size="lg"
+          type="solid"
+          titleStyle={{ color: theme.lightColors.mainTextColor }}
+          onPress={handleSubmit}
+          icon={null}
+          color={theme.lightColors.mainGreen}
+          containerStyle={{
+            width: "100%",
+          }}
+        />
+      ) : (
+        <StandardButton
+          title="Register"
+          size="lg"
+          type="solid"
+          titleStyle={{ color: theme.lightColors.mainTextColor }}
+          onPress={handleSubmit}
+          icon={null}
+          color={theme.lightColors.mainGreen}
+          containerStyle={{
+            width: "100%",
+          }}
+        />
+      )}
     </ScrollView>
   );
 };
@@ -198,7 +212,7 @@ const styles = StyleSheet.create({
   Text: {
     color: "white",
     fontSize: 16,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   registerText: {
     color: "white",
@@ -213,7 +227,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     marginBottom: 20,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 });
 
