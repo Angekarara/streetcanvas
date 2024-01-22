@@ -29,7 +29,7 @@ const DonationForm = ({ route }) => {
 
       console.log(response.data)
       alert("Donation made successfully")
-      navigation.navigate("Admin Dashboard")
+      navigation.navigate("Thanks")
       setLoading(false)
     } catch (error) {
       console.log(error)
