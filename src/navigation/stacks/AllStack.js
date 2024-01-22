@@ -10,6 +10,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import DonorDashboard from '../screens/DonorDashboard';
 import DonationForm from '../screens/DonationForm';
+import Thanks from '../screens/Thanks';
 import * as SecureStore from 'expo-secure-store';
 
 const Stack = createNativeStackNavigator();
@@ -78,6 +79,11 @@ const AllStack = () => {
                 <Stack.Screen
                     name="DonationForm"
                     component={DonationForm}
+                    options={{ header: () => <Header /> }}
+                />
+                 <Stack.Screen 
+                    name="Thanks"
+                    component={Thanks}
                     options={{ header: () => <Header /> }}
                 />
             </Stack.Navigator>
