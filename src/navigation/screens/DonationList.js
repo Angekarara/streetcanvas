@@ -32,23 +32,23 @@ const DonationList = () => {
                             <View style={styles.metric}>
                                 <View style={styles.metricNumber}>
                                     <Text style={styles.text}>FullNames: </Text>
-                                    <Text style={styles.metricNumberText}>{item.FullNames}</Text>
+                                    <Text style={styles.metricNumberText}>{item && item.FullNames}</Text>
                                 </View>
                                 <View style={styles.kidNumber}>
                                     <Text style={styles.text}>Email: </Text>
-                                    <Text style={styles.metricNumberText}>{item.email}</Text>
+                                    <Text style={styles.metricNumberText}>{item && item.email}</Text>
                                 </View>
                                 <View style={styles.kidNumber}>
                                     <Text style={styles.text}>Location: </Text>
-                                    <Text style={styles.metricNumberText}>{item.Location}</Text>
+                                    <Text style={styles.metricNumberText}>{item && item.Location}</Text>
                                 </View>
                                 <View style={styles.kidNumber}>
                                     <Text style={styles.text}>phoneNumber: </Text>
-                                    <Text style={styles.metricNumberText}>{item.phoneNumber}</Text>
+                                    <Text style={styles.metricNumberText}>{item && item.phoneNumber}</Text>
                                 </View>
                                 <View style={styles.kidNumber}>
                                     <Text style={styles.text}>Donated to: </Text>
-                                    <Text style={styles.metricNumberText}>{item.kidId.FullNames}</Text>
+                                    <Text style={styles.metricNumberText}>{item && item.kidId && item.kidId.FullNames}</Text>
                                 </View>
                             </View>
                         )}
